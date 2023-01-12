@@ -1,0 +1,58 @@
+.we_offer > p {
+  margin-top: 2em;
+  font-size: 1.2em;
+}
+.course_card {
+  padding-top: 1em;
+  height: auto;
+  border-radius: 2em;
+}
+.course_card > p:first-child {
+  padding: 0 1.8em;
+  font-family: "arabic";
+}
+.image_container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.8em;
+}
+.image_container div {
+  position: relative;
+  width: 100%;
+  height: 162px;
+}
+.image_container div > img {
+  object-fit: contain;
+}
+.creator {
+  width: 100%;
+  font-size: 0.8em;
+  color: #636363ad;
+}
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff48;
+  padding: 0 1.8em;
+}
+.details > p {
+  color: white;
+}
+.course_card:nth-child(even) {
+  background: transparent
+    linear-gradient(
+      124deg,
+      #fbdaab 0%,
+      #fcce7c 24%,
+      #f9b282 49%,
+      #f3a5cd 73%,
+      #b87ac3 100%
+    )
+    0% 0% no-repeat padding-box;
+}
+.course_card:nth-child(odd) {
+  background: transparent
+    linear-gradient(124deg, #83d8f4 0%, #a78ae4 49%, #b87ac3 100%) 0% 0%
+    no-repeat padding-box;
+}

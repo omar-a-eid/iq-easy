@@ -1,0 +1,60 @@
+.status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 3em;
+  border-radius: 1em;
+  padding: 1em 3em;
+  width: 350px;
+  background-color: #f6f9fd;
+}
+.status > div > a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.active::after {
+  position: relative;
+  content: " ";
+  width: 65px;
+  height: 3px;
+  bottom: -15px;
+  background-color: #0266ff;
+}
+
+.category_container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 1em 1em;
+  margin-top: 2em;
+}
+
+.category_wrapper {
+  display: flex;
+  align-items: center;
+  box-shadow: 3px 3px 15px #4c4c4c29;
+  padding: 1em 1.5em;
+  max-width: 500px;
+  min-width: 400px;
+  margin: 0.5em;
+  border-radius: 1em;
+}
+
+.category_wrapper > div:first-child {
+  height: fit-content;
+  padding: 0.8em;
+  border-radius: 1em;
+  margin-right: 1em;
+  background-color: #c8e6f1;
+  border: 1px solid #2cf5ab;
+}
+
+.category_wrapper > div > p:first-child {
+  font-family: "arabic";
+  font-size: 1em;
+}
+.category_wrapper > div > p:last-child {
+  font-size: 0.8em;
+}

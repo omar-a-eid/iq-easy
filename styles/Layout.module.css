@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: transparent
+    linear-gradient(
+      170deg,
+      #0066ff 0%,
+      #1d63fe 9%,
+      #3a61fd 21%,
+      #575efc 34%,
+      #755cfb 46%,
+      #9259fa 55%,
+      #af57f9 68%,
+      #cc54f8 82%,
+      #ea52f8 100%
+    )
+    0% 0% no-repeat padding-box;
+  color: white;
+}
+
+.main {
+  width: 80%;
+  margin: 10px 0;
+  margin-right: 10px;
+  padding: 10px 4em;
+  padding-right: 0;
+  z-index: 1;
+  border-radius: 50px;
+  background-color: white;
+  color: black;
+}
+
+.main > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 4em;
+}

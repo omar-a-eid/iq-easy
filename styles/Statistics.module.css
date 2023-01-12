@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comp,
+.prog,
+.spent {
+  padding: 1em;
+  box-shadow: 3px 3px 3px #b7b7b729;
+  border-radius: 20px;
+}
+.comp {
+  background: #e5f4f9;
+}
+.prog {
+  background: #e0ecff;
+  margin: 0 1em;
+}
+.spent {
+  background: #fceafe;
+}
+.text {
+  margin-bottom: 0.4em;
+  line-height: 1;
+  font-size: 4em;
+  font-weight: lighter;
+}

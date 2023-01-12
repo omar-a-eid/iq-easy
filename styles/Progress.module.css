@@ -1,0 +1,25 @@
+.container {
+  margin-left: 2em;
+}
+.course_card {
+  min-width: 250px;
+  border-radius: 1em;
+  background: transparent
+    linear-gradient(118deg, #f5b498 0%, #e683a5 49%, #b87ac3 100%) 0% 0%
+    no-repeat padding-box;
+  color: white;
+}
+.header {
+  position: absolute;
+  right: 0;
+  width: fit-content;
+  padding: 0.4em;
+  border-bottom-left-radius: 1em;
+  font-size: 0.9em;
+  background-color: rgba(255, 255, 255, 0.192);
+}
+.text {
+  padding: 0 1em;
+  margin-top: 3em;
+  font-family: "arabic";
+}

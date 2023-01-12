@@ -1,0 +1,62 @@
+.form,
+.form > div {
+  display: flex;
+  flex-direction: column;
+}
+.form {
+  min-width: 24em;
+}
+.form > div {
+  margin-top: 1.4em;
+}
+.form label {
+  font-weight: normal;
+  color: #4e4e4e;
+}
+.form input {
+  margin-top: 0.6em;
+  padding: 0.9em 1em;
+  font-size: 1em;
+  border: 0.25px solid #b9b8b8;
+  border-radius: 5px;
+}
+
+.button {
+  margin-top: 2em;
+  padding: 10px 0;
+  font-size: 1.3em;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  background: transparent
+    linear-gradient(
+      90deg,
+      #0066ff 0%,
+      #1d63fe 9%,
+      #3a61fd 21%,
+      #575efc 34%,
+      #755cfb 46%,
+      #9259fa 55%,
+      #af57f9 68%,
+      #cc54f8 82%,
+      #ea52f8 100%
+    )
+    0% 0% no-repeat padding-box;
+}
+.error {
+  padding: 1em;
+  border-radius: 1em;
+  border: 3px solid red;
+  color: white;
+  background-color: rgba(255, 11, 11, 0.62);
+}
+
+.rem_for {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+}
+.rem_for input {
+  accent-color: #0266ff;
+}

@@ -1,0 +1,122 @@
+.nav_container {
+  width: 20%;
+  padding: 1.5% 1%;
+  padding-right: 0;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3.5em;
+}
+.logo img {
+  margin-right: 15px;
+}
+.logo p {
+  font-size: 1.1rem;
+}
+
+.links_container > a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.7em 0;
+  padding-left: 2em;
+  margin: 1.2em 0;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+.active {
+  background-color: rgb(255, 255, 255);
+}
+.active::after,
+.active::before {
+  content: " ";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: transparent;
+  right: -1px;
+  box-shadow: 36px 11px 0px 0px rgb(255, 255, 255);
+}
+.active::before {
+  top: -60px;
+  transform: rotate(26deg);
+}
+.active::after {
+  bottom: -60px;
+  transform: rotate(-60deg);
+}
+
+/*--- Links ---*/
+.links {
+  color: #c8e6f1;
+  font-weight: 600;
+  margin-left: 1em;
+  line-height: 0;
+}
+
+.support_container {
+  width: 90%;
+  max-width: 15em;
+  margin: 0 auto;
+  margin-top: 8em;
+  padding: 1em 2em;
+  border-radius: 20px;
+  background: #d087fa91 0% 0% no-repeat padding-box;
+}
+.support_container > div:last-of-type {
+  position: relative;
+  height: 130px;
+}
+.support_container p {
+  font-size: 0.9em;
+  line-height: 0.8em;
+}
+.support_container p:last-of-type {
+  font-size: 0.8em;
+  font-weight: 400;
+}
+.support_image {
+  position: absolute;
+  right: -2em;
+  top: -2em;
+}
+.button {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border-radius: 10px;
+  margin-top: 1em;
+  background: transparent
+    linear-gradient(
+      110deg,
+      #06f 0%,
+      #1d63fe 9%,
+      #3a61fd 21%,
+      #575efc 34%,
+      #755cfb 46%,
+      #9259fa 55%,
+      #af57f9 68%,
+      #cc54f8 82%,
+      #ea52f8 100%
+    )
+    0% 0% no-repeat padding-box;
+  color: white;
+  font-weight: 600;
+  outline: none;
+  border: none;
+  font-size: 0.9em;
+}
+.color {
+  position: absolute;
+  right: -2em;
+  bottom: -1em;
+  width: 100%;
+  height: 160px;
+  background-color: #cf88fa;
+  border-top-left-radius: 137px;
+  border-bottom-right-radius: 20px;
+  max-width: 11em;
+}
