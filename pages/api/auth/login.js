@@ -8,7 +8,7 @@ export default async function login(req, res) {
   await connectMongo();
   const { email, password, remember } = req.body;
   try {
-    const student = await Student.findOne({ email: email });
+    const student = await Student.findOne({ email: email }).populate("code");
     if (!student) {
       const error = new Error("A student with this email could not be found.");
       error.statusCode = 401;
@@ -28,7 +28,7 @@ export default async function login(req, res) {
 
     const jwt = await new jose.SignJWT({ "urn:example:claim": true })
       .setProtectedHeader({ alg })
-      .setIssuedAt()
+      .setSubject(`${student.code.expiration}`)
       .setIssuer(student.isAdmin == true ? "admin" : "")
       .setAudience(student._id.toString())
       .setExpirationTime(remember == "on" ? "10y" : "2h")

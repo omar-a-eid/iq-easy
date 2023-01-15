@@ -26,3 +26,10 @@
   font-size: 4em;
   font-weight: lighter;
 }
+
+@media (max-width: 1330px) {
+  .container {
+    justify-content: flex-start;
+    padding-right: 1em;
+  }
+}

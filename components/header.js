@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useCallback, useRef, useState } from "react";
 import styles from "../styles/Header.module.css";
 
 export default function Header({
@@ -6,6 +7,31 @@ export default function Header({
   name,
   enc = "We're looking forward to have you on board",
 }) {
+  const searchRef = useRef();
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(false);
+  const [results, setResults] = useState([]);
+
+  const onChange = (e) => {
+    const query = e.target.value;
+    //fetch and set the results
+    fetch(`/api/searchCourses?search=${query}`)
+      .then((res) => res.json())
+      .then((data) => setResults(data.results));
+  };
+  const onFocus = () => {
+    setActive(true);
+    window.addEventListener("click", onClick);
+  };
+
+  const onClick = useCallback((event) => {
+    if (event.target.id !== "search") {
+      setActive(false);
+      setQuery("");
+      setResults([]);
+      window.removeEventListener("click", onClick);
+    }
+  }, []);
   return (
     <div>
       {title ? (
@@ -33,10 +59,24 @@ export default function Header({
             </svg>
           </label>
           <input
+            ref={searchRef}
+            onChange={onChange}
+            onFocus={onFocus}
             type="search"
             id="search"
             placeholder="What do you want to learn?"
           />
+          {active && results.length > 0 ? (
+            <div className={styles.results}>
+              {results.map((result, id) => (
+                <Link key={id} href={`/courses/${result._id}`}>
+                  {result.name}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div>
           <Link href="/dashboard">

@@ -2,66 +2,255 @@ import Image from "next/image";
 import Layout from "../../../components/layout";
 import styles from "../../../styles/Content.module.css";
 import Link from "next/link";
+import { useState } from "react";
 
-export default function Videos() {
+export default function Videos(props) {
+  const { all, currentCourse, student } = props.data;
+  const [src, setSrc] = useState(currentCourse.videos[0].videoUrl);
+  const [vdId, setVdId] = useState(currentCourse.videos[0]._id);
+  const [active, setActive] = useState(false);
+
+  let interval;
+  function pause() {
+    const video = document.querySelector("#time");
+    const duration = video.duration.toString().split(".")[0];
+    const id = video.dataset.vdid;
+    if (Math.round(video.currentTime) < duration - 5) {
+      fetch(
+        `/api/progress?id=${id}&courseId=${currentCourse._id}&courseName=${currentCourse.name}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+  }
+  function play(e) {
+    fetch(`/api/getVideo?id=${e.currentTarget.id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        pause();
+        return res.json();
+      })
+      .then((data) => {
+        setVdId(data._id);
+        setSrc(data.videoUrl);
+      });
+  }
+  function time() {
+    const video = document.querySelector("#time");
+    const duration = video.duration.toString().split(".")[0];
+    const id = video.dataset.vdid;
+    interval = setInterval(function () {
+      if (Math.round(video.currentTime) >= duration - 5) {
+        fetch(`/api/completed?id=${id}&duration=${duration}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+    }, 1000);
+  }
+  function displayAll(params) {
+    document.querySelector("#all").style.display = "flex";
+    document.querySelector("#current").style.display = "none";
+    setActive(false);
+  }
+  function displayCurrent(params) {
+    document.querySelector("#current").style.display = "flex";
+    document.querySelector("#all").style.display = "none";
+    setActive(true);
+  }
   return (
-    <Layout page="/courses" width={100}>
+    <Layout page="/courses" width={100} title="Courses">
       <div className={styles.container}>
-        <div></div>
-        {/* <div>
-            <div className={styles.status}>
-              <div>
-                <Link href="/courses">All courses</Link>
+        <div>
+          <div className={styles.status_container}>
+            <div>
+              <div
+                className={!active ? styles.active : styles.notActive}
+                onClick={displayAll}
+              >
+                All courses
               </div>
-              <div>
-                <Link href="/courses/current" className={styles.active}>
-                  Current
-                </Link>
+              <div
+                className={active ? styles.active : styles.notActive}
+                onClick={displayCurrent}
+                style={{ padding: " 0 0.5em" }}
+              >
+                Current
               </div>
             </div>
-            <div>
-              <div className={styles.category_wrapper}>
+          </div>
+          <div className={styles.courses_container} id="all">
+            {all.map((course, id) => (
+              <Link
+                key={id}
+                href={`/courses/${course._id.toString()}`}
+                className={styles.course}
+              >
                 <div>
                   <Image
                     className={styles.adv_image}
-                    src="/courses/facebook_category.png"
+                    src={course.icon}
                     alt=" "
                     width={60}
                     height={60}
                   />
                 </div>
                 <div>
-                  <p>إعلانات الفيسبوك وإنستجرام</p>
-                  <p>Tuesday, Sep 06, 2022</p>
+                  <p>{course.name}</p>
+                  <p>
+                    {new Date(course.createdAt).toLocaleDateString("en-us", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </p>
                 </div>
-              </div>
-            </div>
-          </div> */}
+              </Link>
+            ))}
+          </div>
+          <div
+            className={styles.courses_container}
+            id="current"
+            style={{ display: "none" }}
+          >
+            {student.courses.map((course, id) => (
+              <Link
+                key={id}
+                href={`/courses/${course.course._id}`}
+                className={styles.course}
+              >
+                <div>
+                  <Image
+                    className={styles.adv_image}
+                    src={course.course.icon}
+                    alt=" "
+                    width={60}
+                    height={60}
+                  />
+                </div>
+                <div>
+                  <p>{course.course.name}</p>
+                  <p>
+                    {new Date(course.course.createdAt).toLocaleDateString(
+                      "en-us",
+                      {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }
+                    )}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
         <div>
           <div>
-            <video controls className={styles.video}>
-              <source src="/courses/videos.mp4" type="video/mp4" />
-            </video>
+            <video
+              id="time"
+              onPlay={(e) => time(e)}
+              onPause={(e) => {
+                clearInterval(interval);
+                pause();
+              }}
+              controls
+              className={styles.video}
+              data-vdid={vdId}
+              src={src}
+              type="video/mp4"
+            ></video>
           </div>
-          <h2 className={styles.title}>إعلانات الفيسبوك وأنستجرام</h2>
+          <h2 className={styles.title}>{currentCourse.name}</h2>
           <div>
-            <div>
+            <div className={styles.details}>
               <h3>Courses content</h3>
-              <div>12 lectures *2 hours</div>
-            </div>
-            <div>
-              <div></div>
               <div>
-                <div>
-                  <div>03:29 mins</div>
-                  <div>مفدمة عن التسويق</div>
-                </div>
-                <div></div>
+                {currentCourse.lectureNumber} lectures *
+                {currentCourse.hours / 60 >= 1
+                  ? `${Math.round(currentCourse.hours / 60)} hours.`
+                  : `${
+                      (currentCourse.hours / 60).toString().split(".")[1]
+                    } mins`}
               </div>
+            </div>
+            <div className={styles.videos_container}>
+              {currentCourse.videos.map((video, id) => (
+                <div
+                  key={id}
+                  className={styles.video_container}
+                  id={video._id.toString()}
+                  onClick={(e) => play(e)}
+                >
+                  <div className={styles.imgText}>
+                    <div className={styles.image}>
+                      <Image
+                        src="/content/play.png"
+                        alt=" "
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                    <div>
+                      <div>
+                        <div className={styles.time}>
+                          <Image
+                            src="/content/time.png"
+                            alt=" "
+                            width={20}
+                            height={20}
+                          />
+                          {video.time} mins
+                        </div>
+                      </div>
+                      <div className={styles.name}>{video.name}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <Image
+                      src="/content/play2.png"
+                      alt=" "
+                      width={30}
+                      height={30}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(req) {
+  const host = req.req.headers.host;
+  const proto =
+    req.req.headers["x-forwarded-proto"] || req.req.connection.encrypted
+      ? "https"
+      : "http";
+  const { videoId } = req.params;
+  const res = await fetch(
+    `${proto}://${host}/api/getCourse?course=${videoId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${req.req.cookies.token}`,
+      },
+    }
+  );
+  const data = await res.json();
+  return {
+    props: {
+      data: data,
+    },
+  };
 }

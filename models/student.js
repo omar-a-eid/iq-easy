@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-
+const Content = require("./content");
+const Course = require("./course");
+const Code = require("./code");
 const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
@@ -25,19 +27,39 @@ const studentSchema = new Schema({
     {
       course: {
         type: Schema.Types.ObjectId,
-        ref: "Course",
+        ref: Course,
       },
       status: {
         type: String,
         enum: ["Progress", "Completed"],
         default: "Progress",
       },
+      videosCompleted: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Content",
+        },
+      ],
+    },
+  ],
+  videosInProg: [
+    {
+      video: {
+        type: Schema.Types.ObjectId,
+        ref: Content,
+      },
+      courseName: {
+        type: String,
+      },
+      courseId: {
+        type: String,
+      },
     },
   ],
   code: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Code",
+    ref: Code,
   },
   isAdmin: {
     default: false,

@@ -14,7 +14,7 @@ export default async function middleware(req) {
       try {
         const { cookies } = req;
         const jwt = cookies.get("token").value;
-        await jose.jwtVerify(jwt, secret);
+        const { payload } = await jose.jwtVerify(jwt, secret);
         url.pathname = "/dashboard";
         return NextResponse.redirect(url);
       } catch (err) {
@@ -38,18 +38,29 @@ export default async function middleware(req) {
 
   if (
     req.nextUrl.pathname.includes("/dashboard") ||
-    req.nextUrl.pathname.includes("/course")
+    req.nextUrl.pathname.includes("/courses")
   ) {
     try {
       const { cookies } = req;
       const jwt = cookies.get("token").value;
       await jose.jwtVerify(jwt, secret);
 
-      return NextResponse.next();
+      NextResponse.next();
     } catch (err) {
       url.pathname = "/login";
       return NextResponse.redirect(url);
     }
+  }
+
+  if (req.nextUrl.pathname.includes("/courses")) {
+    const { cookies } = req;
+    const jwt = cookies.get("token").value;
+    const { payload } = await jose.jwtVerify(jwt, secret);
+    if (new Date(payload.sub).getTime() === new Date().getTime()) {
+      url.pathname = "/dashboard";
+      return NextResponse.next(url);
+    }
+    return NextResponse.next();
   }
   return NextResponse.next();
 }

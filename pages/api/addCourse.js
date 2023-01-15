@@ -48,16 +48,19 @@ apiRoute.post(async (req, res) => {
   const { icon, avatar, videos } = req.files;
   const videosID = [];
   let hours = 0;
+  let time;
 
   const createVideos = async () => {
     return Promise.all(
       videos.map(async (video) => {
-        getVideoDurationInSeconds(video.path).then((duration) => {
-          hours += duration;
-        });
+        time = 0;
+        const duration = await getVideoDurationInSeconds(video.path);
+        hours += duration;
+        time = duration;
         const content = new Video({
           name: video.originalname,
           videoUrl: `/content/${req.body.name}/${video.filename}`,
+          time: Math.ceil(time / 60),
         });
         const result = await content.save();
         videosID.push(result._id);
@@ -65,22 +68,18 @@ apiRoute.post(async (req, res) => {
     );
   };
 
-  createVideos()
-    .then(async () => {
-      const course = new Course({
-        name: name,
-        icon: `/content/${req.body.name}/${icon[0].filename}`,
-        avatar: `/content/${req.body.name}/${avatar[0].filename}`,
-        videos: videosID,
-        hours: hours / 60,
-        lectureNumber: videosID.length,
-      });
-      await course.save();
-      res.status(200).json({ data: "success" });
-    })
-    .catch((err) => {
-      console.log(err);
+  createVideos().then(async () => {
+    const course = new Course({
+      name: name,
+      icon: `/content/${req.body.name}/${icon[0].filename}`,
+      avatar: `/content/${req.body.name}/${avatar[0].filename}`,
+      videos: videosID,
+      hours: Math.ceil(hours / 60),
+      lectureNumber: videosID.length,
     });
+    await course.save();
+    res.status(200).json({ data: "success" });
+  });
 });
 
 export default apiRoute;

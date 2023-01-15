@@ -11,6 +11,10 @@ const contentSchema = new Schema({
     type: String,
     required: true,
   },
+  time: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports =

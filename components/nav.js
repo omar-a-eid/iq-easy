@@ -90,6 +90,18 @@ export default function Nav({ page }) {
           </div>
         </div>
       )}
+      <Link
+        href="https://web.facebook.com/people/Easytonline/100089240949977/"
+        className={styles.contact}
+      >
+        <Image
+          className={styles.support_image}
+          src="/nav/contact.png"
+          alt=" "
+          width={50}
+          height={50}
+        />
+      </Link>
     </div>
   );
 }

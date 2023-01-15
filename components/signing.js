@@ -78,7 +78,7 @@ export default function Signing({ children, page }) {
               </p>
             )}
           </div>
-          <div className={styles.or}>
+          {/* <div className={styles.or}>
             <div className={styles.line}></div>
             <p>Or</p>
             <div className={styles.line}></div>
@@ -86,7 +86,7 @@ export default function Signing({ children, page }) {
           <div>
             <div></div>
             <div></div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className={styles.guest}>

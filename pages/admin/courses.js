@@ -16,18 +16,9 @@ export default function Home() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        onUploadProgress: (event) => {
-          console.log(
-            `Current progress:`,
-            Math.round((event.loaded * 100) / event.total)
-          );
-        },
       })
       .then((res) => {
         setSuccess(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
   function submitHandler(event) {

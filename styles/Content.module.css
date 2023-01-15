@@ -1,10 +1,73 @@
+.status_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+.status_container > div {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 1em;
+  padding: 1em 3em;
+  width: 350px;
+  background-color: #f6f9fd;
+}
+.active {
+  position: relative;
+  cursor: pointer;
+}
+.active::after {
+  position: absolute;
+  content: " ";
+  width: 60px;
+  height: 3px;
+  bottom: -15px;
+  left: 10px;
+  background-color: #0266ff;
+}
+.notActive {
+  cursor: pointer;
+  color: gray;
+}
+.courses_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 75vh;
+  overflow-y: scroll;
+}
+.course {
+  display: flex;
+  align-items: center;
+  box-shadow: 3px 3px 15px #4c4c4c29;
+  padding: 1em 1.5em;
+  width: 90%;
+  margin: 0.5em;
+  border-radius: 1em;
+}
+.course > div:first-child {
+  height: fit-content;
+  padding: 0.8em;
+  border-radius: 1em;
+  margin-right: 1em;
+  background-color: #c8e6f1;
+  border: 1px solid #2cf5ab;
+}
+.course > div > p:first-child {
+  font-family: "arabic";
+  font-size: 1em;
+}
+.course > div > p:last-child {
+  font-size: 0.8em;
+}
+
 .container {
   display: flex;
   justify-content: space-between;
   padding-right: 2em;
+  margin-top: 3em;
 }
 .container > div:first-child {
-  width: 25%;
+  width: 30%;
 }
 .container > div:last-child {
   width: 65%;
@@ -12,9 +75,60 @@
 
 .video {
   width: 100%;
-  height: 40vh;
+  height: 35vh;
   border-radius: 1em;
 }
 .title {
   font-family: "arabic";
+}
+.videos_container {
+  height: 33vh;
+  overflow-y: scroll;
+}
+.videos_container > div {
+  margin-bottom: 1em;
+}
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.details > div {
+  color: gray;
+  font-size: 0.9em;
+  font-weight: lighter;
+}
+.imgText {
+  display: flex;
+  align-items: center;
+}
+.image {
+  margin-right: 1em;
+  padding: 2.5em 3em;
+  border-top-left-radius: 1em;
+  border-bottom-left-radius: 1em;
+  background: transparent linear-gradient(45deg, #bb7ac1 0%, #f4b298 100%) 0% 0%
+    no-repeat padding-box;
+}
+.image:nth-of-type(2) {
+  background: transparent linear-gradient(45deg, #b67bc6 0%, #83d6f3 100%) 0% 0%
+    no-repeat padding-box;
+}
+.time {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+}
+.time img {
+  margin-right: 0.5em;
+}
+.name {
+  font-family: "arabic";
+}
+.video_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 2em;
 }

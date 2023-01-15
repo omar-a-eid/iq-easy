@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Content = require("./content");
 const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
@@ -19,7 +19,7 @@ const courseSchema = new Schema(
     videos: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Content",
+        ref: Content,
         required: true,
       },
     ],

@@ -1,9 +1,16 @@
+.container {
+  display: flex;
+}
+.container > a {
+  min-width: 300px;
+  margin: 0 0.5em;
+}
 .we_offer > p {
   margin-top: 2em;
   font-size: 1.2em;
 }
 .course_card {
-  padding-top: 1em;
+  padding-top: 1em 0.5em;
   height: auto;
   border-radius: 2em;
 }
@@ -18,15 +25,17 @@
 }
 .image_container div {
   position: relative;
-  width: 100%;
+  width: 49%;
   height: 162px;
 }
+
 .image_container div > img {
   object-fit: contain;
 }
 .creator {
-  width: 100%;
+  width: max-content;
   font-size: 0.8em;
+  margin-right: 1em;
   color: #636363ad;
 }
 .details {
@@ -55,4 +64,10 @@
   background: transparent
     linear-gradient(124deg, #83d8f4 0%, #a78ae4 49%, #b87ac3 100%) 0% 0%
     no-repeat padding-box;
+}
+.play {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }

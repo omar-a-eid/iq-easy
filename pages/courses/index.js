@@ -4,6 +4,12 @@ import Layout from "../../components/layout";
 import Link from "next/link";
 
 export default function Courses({ data }) {
+  function addProgress(e) {
+    fetch(`/api/addProgress?id=${e.currentTarget.id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+  }
   return (
     <Layout page="/courses" width={100} title="All courses">
       <div>
@@ -19,35 +25,42 @@ export default function Courses({ data }) {
                 <Link href="/courses/current">Current</Link>
               </div>
             </div>
-            <div className={styles.category_container}>
-              {data.map((course, id) => (
-                <Link
-                  key={id}
-                  href={`/courses/${course._id.toString()}`}
-                  className={styles.category_wrapper}
-                >
-                  <div>
-                    <Image
-                      className={styles.adv_image}
-                      src={course.icon}
-                      alt=" "
-                      width={60}
-                      height={60}
-                    />
-                  </div>
-                  <div>
-                    <p>{course.name}</p>
-                    <p>
-                      {new Date(course.createdAt).toLocaleDateString("en-us", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+            <div className={styles.category_height}>
+              <div className={styles.category_container}>
+                {data.map((course, id) => (
+                  <Link
+                    key={id}
+                    id={course._id}
+                    href={`/courses/${course._id.toString()}`}
+                    className={styles.category_wrapper}
+                    onClick={(e) => addProgress(e)}
+                  >
+                    <div>
+                      <Image
+                        className={styles.adv_image}
+                        src={course.icon}
+                        alt=" "
+                        width={60}
+                        height={60}
+                      />
+                    </div>
+                    <div>
+                      <p>{course.name}</p>
+                      <p>
+                        {new Date(course.createdAt).toLocaleDateString(
+                          "en-us",
+                          {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          }
+                        )}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -56,8 +69,13 @@ export default function Courses({ data }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const res = await fetch("http://localhost:3000/api/fetch", {
+export async function getServerSideProps(req) {
+  const host = req.req.headers.host;
+  const proto =
+    req.req.headers["x-forwarded-proto"] || req.req.connection.encrypted
+      ? "https"
+      : "http";
+  const res = await fetch(`${proto}://${host}/api/fetch`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
