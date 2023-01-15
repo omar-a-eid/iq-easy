@@ -84,7 +84,7 @@ export default function Login(params) {
             />
           </div>
           <button className={styles.button}>Login</button>
-          {/* <div>
+          <div>
             <div className={styles.rem_for}>
               <div>
                 <input
@@ -99,7 +99,7 @@ export default function Login(params) {
                 <Link href="forget">Forget password?</Link>
               </div>
             </div>
-          </div> */}
+          </div>
         </form>
       </div>
     </Signing>
