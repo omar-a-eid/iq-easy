@@ -5,6 +5,8 @@ import axios from "axios";
 
 export default function Home() {
   const [success, setSuccess] = useState("");
+  const [prog, setProg] = useState("");
+
   const nameRef = useRef();
   const iconRef = useRef();
   const avatarRef = useRef();
@@ -16,9 +18,19 @@ export default function Home() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        onUploadProgress: (event) => {
+          setProg(Math.round((event.loaded * 100) / event.total));
+          console.log(
+            `Current progress:`,
+            Math.round((event.loaded * 100) / event.total)
+          );
+        },
       })
       .then((res) => {
         setSuccess(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
   function submitHandler(event) {
@@ -84,6 +96,7 @@ export default function Home() {
           <button>Add</button>
         </form>
       </div>
+      <div>{prog}</div>
       <div>{success}</div>
     </Layout>
   );

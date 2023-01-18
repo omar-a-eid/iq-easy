@@ -10,12 +10,17 @@ const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       const dir = `./public/content/${req.body.name}`;
-      fs.exists(dir, (exist) => {
-        if (!exist) {
-          return fs.mkdir(dir, (error) => cb(error, dir));
-        }
+      // fs.existsSync(dir, (exist) => {
+      //   if (!exist) {
+      //     return fs.mkdir(dir, (error) => cb(error, dir));
+      //   }
+      //   return cb(null, dir);
+      // });
+      if (fs.existsSync(dir)) {
         return cb(null, dir);
-      });
+      } else {
+        return fs.mkdir(dir, (error) => cb(error, dir));
+      }
     },
     filename: (req, file, cb) => {
       cb(null, Date.now() + file.originalname);
@@ -35,11 +40,7 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.use(
-  upload.fields([
-    { name: "icon", maxCoumt: 1 },
-    { name: "avatar", maxCoumt: 1 },
-    { name: "videos", maxCoumt: 100 },
-  ])
+  upload.fields([{ name: "icon" }, { name: "avatar" }, { name: "videos" }])
 );
 
 apiRoute.post(async (req, res) => {
@@ -52,7 +53,7 @@ apiRoute.post(async (req, res) => {
 
   const createVideos = async () => {
     return Promise.all(
-      videos.map(async (video) => {
+      await videos.map(async (video) => {
         time = 0;
         const duration = await getVideoDurationInSeconds(video.path);
         hours += duration;
@@ -64,22 +65,27 @@ apiRoute.post(async (req, res) => {
         });
         const result = await content.save();
         videosID.push(result._id);
+        console.log(videosID);
       })
     );
   };
 
-  createVideos().then(async () => {
-    const course = new Course({
-      name: name,
-      icon: `/content/${req.body.name}/${icon[0].filename}`,
-      avatar: `/content/${req.body.name}/${avatar[0].filename}`,
-      videos: videosID,
-      hours: Math.ceil(hours / 60),
-      lectureNumber: videosID.length,
+  createVideos()
+    .then(() => {
+      const course = new Course({
+        name: name,
+        icon: `/content/${req.body.name}/${icon[0].filename}`,
+        avatar: `/content/${req.body.name}/${avatar[0].filename}`,
+        videos: videosID,
+        hours: Math.ceil(hours / 60),
+        lectureNumber: videosID.length,
+      });
+      return course.save();
+    })
+    .then(() => res.status(200).json({ data: "success" }))
+    .catch((err) => {
+      console.log(err);
     });
-    await course.save();
-    res.status(200).json({ data: "success" });
-  });
 });
 
 export default apiRoute;
