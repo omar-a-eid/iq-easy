@@ -71,6 +71,9 @@ apiRoute.post(async (req, res) => {
   };
 
   createVideos()
+    .then((res) => {
+      return res;
+    })
     .then(() => {
       const course = new Course({
         name: name,
