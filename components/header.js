@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import styles from "../styles/Header.module.css";
+import { useRouter } from "next/router";
 
 export default function Header({
   title,
   name,
   enc = "We're looking forward to have you on board",
 }) {
+  const router = useRouter();
   const searchRef = useRef();
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(false);
@@ -32,6 +34,10 @@ export default function Header({
       window.removeEventListener("click", onClick);
     }
   }, []);
+
+  const logout = () => {
+    fetch(`/api/auth/logout`).then((res) => router.push("/login"));
+  };
   return (
     <div>
       {title ? (
@@ -91,6 +97,9 @@ export default function Header({
               </svg>
             </div>
           </Link>
+        </div>
+        <div className={styles.logout}>
+          <p onClick={logout}>Logout</p>
         </div>
       </div>
     </div>

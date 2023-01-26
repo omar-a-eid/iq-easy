@@ -90,3 +90,13 @@
     padding: 0;
   }
 }
+@media (max-width: 540px) {
+  .icon_search {
+    flex-wrap: wrap-reverse;
+  }
+}
+.logout {
+  cursor: pointer;
+  margin-left: 1em;
+  color: rgb(42, 42, 172);
+}
