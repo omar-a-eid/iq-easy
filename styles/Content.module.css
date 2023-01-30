@@ -132,3 +132,18 @@
   align-items: center;
   padding-right: 2em;
 }
+
+@media (max-width: 1110px) {
+  .container > div:first-child {
+    display: none;
+  }
+  .container > div:last-child {
+    width: 100%;
+  }
+}
+
+@media (max-width: 535px) {
+  .play2 {
+    display: none;
+  }
+}

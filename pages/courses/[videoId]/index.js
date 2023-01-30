@@ -176,7 +176,10 @@ export default function Videos(props) {
                 {currentCourse.hours / 60 >= 1
                   ? `${Math.round(currentCourse.hours / 60)} hours.`
                   : `${
-                      (currentCourse.hours / 60).toString().split(".")[1]
+                      (currentCourse.hours / 60)
+                        .toFixed(2)
+                        .toString()
+                        .split(".")[1]
                     } mins`}
               </div>
             </div>
@@ -212,7 +215,7 @@ export default function Videos(props) {
                       <div className={styles.name}>{video.name}</div>
                     </div>
                   </div>
-                  <div>
+                  <div className={styles.play2}>
                     <Image
                       src="/content/play2.png"
                       alt=" "

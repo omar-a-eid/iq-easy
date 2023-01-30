@@ -27,6 +27,7 @@
 .category_height {
   height: 70vh;
   overflow-y: scroll;
+  overflow-x: hidden;
   margin-top: 2em;
 }
 .category_container {
@@ -87,6 +88,9 @@
 @media (max-width: 430px) {
   .category_container {
     padding-right: 0;
+  }
+  .category_wrapper {
+    width: 90%;
   }
 }
 

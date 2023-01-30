@@ -41,8 +41,7 @@ export default function Signing({ children, page }) {
           <Image
             className={styles.person}
             src="/signing/person.png"
-            width={460}
-            height={551.5}
+            fill
             alt=" "
           />
         </div>

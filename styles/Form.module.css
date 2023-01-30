@@ -60,3 +60,10 @@
 .rem_for input {
   accent-color: #0266ff;
 }
+
+@media (max-width: 430px) {
+  .form {
+    width: 90vw;
+    min-width: auto;
+  }
+}

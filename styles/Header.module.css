@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 380px) {
   .welcome {
     line-height: 1.5;
     padding: 0;

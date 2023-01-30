@@ -4,9 +4,10 @@
 
 .welcome_signing {
   position: relative;
-  width: 38em;
+  max-width: 38em;
+  min-width: 38em;
   min-height: 100vh;
-  overflow-y: hidden;
+  overflow: hidden;
   text-align: center;
   color: white;
   background: transparent
@@ -45,8 +46,11 @@
 
 .person {
   position: absolute;
-  bottom: 2em;
-  right: 0;
+  height: 50vh !important;
+  width: auto !important;
+  inset: unset !important;
+  right: 0 !important;
+  bottom: 5em !important;
 }
 
 .links_container {
@@ -144,4 +148,38 @@
   bottom: 3em;
   right: 3em;
   color: #0266ff;
+}
+
+@media (max-width: 1366px) {
+  .welcome_signing {
+    width: 40%;
+    min-width: auto;
+  }
+  .person {
+    display: none;
+  }
+}
+
+@media (max-width: 1140px) {
+  .welcome_signing {
+    display: none;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2em;
+  }
+  .change {
+    margin-top: 0em;
+  }
+  .guest {
+    margin-top: 2em;
+    position: relative;
+  }
+}
+@media (max-width: 430px) {
+  .form_container {
+    width: 100%;
+  }
 }
