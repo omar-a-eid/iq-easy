@@ -77,19 +77,10 @@ export default function Signing({ children, page }) {
               </p>
             )}
           </div>
-          {/* <div className={styles.or}>
-            <div className={styles.line}></div>
-            <p>Or</p>
-            <div className={styles.line}></div>
-          </div>
-          <div>
-            <div></div>
-            <div></div>
-          </div> */}
         </div>
-      </div>
-      <div className={styles.guest}>
-        <Link href="/">Login As a Guest</Link>
+        <div className={styles.guest}>
+          <Link href="/">Login As a Guest</Link>
+        </div>
       </div>
     </div>
   );

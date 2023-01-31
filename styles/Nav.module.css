@@ -189,9 +189,6 @@
     border-bottom-left-radius: 0;
     border-top-right-radius: 100px;
   }
-  .active::after,
-  .active::before {
-  }
   .active::before {
     left: -60px;
     top: 21px;
@@ -199,6 +196,6 @@
   .active::after {
     bottom: -2px;
     transform: rotate(111deg);
-    left: 51px;
+    left: 49px;
   }
 }
