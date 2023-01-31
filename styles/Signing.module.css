@@ -25,14 +25,6 @@
     )
     0% 0% no-repeat padding-box;
 }
-.welcome_wrapper {
-  margin-top: 20vh;
-}
-.welcome_wrapper h1 {
-  margin-bottom: 0.9em;
-  line-height: 0;
-  font-size: 1.8em;
-}
 .top_color {
   position: absolute;
   top: -22em;
@@ -61,6 +53,7 @@
   justify-content: flex-end;
   align-items: flex-end;
   z-index: 9;
+  margin-top: 30vh;
 }
 .links_container > div {
   width: 7em;

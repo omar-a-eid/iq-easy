@@ -13,10 +13,6 @@ export default function Signing({ children, page }) {
           height={600}
           alt=" "
         />
-        <div className={styles.welcome_wrapper}>
-          <h1>Weclome back</h1>
-          <p>Iq Easy-t Online</p>
-        </div>
 
         <div className={styles.links_container}>
           <div className={page == "/login" ? styles.active : " "}>
