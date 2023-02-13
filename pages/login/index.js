@@ -64,9 +64,9 @@ export default function Login(params) {
           <div>
             <label htmlFor="email">Email</label>
             <input
-              type="email"
               id="email"
               name="email"
+              type="email"
               placeholder="example@gmail.com"
               ref={emailRef}
               required

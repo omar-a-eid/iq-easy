@@ -68,12 +68,6 @@ export default function Dashboard({ data, hours }) {
 }
 
 export async function getServerSideProps(req) {
-  const host = req.req.headers.host;
-  const proto =
-    req.req.headers["x-forwarded-proto"] || req.req.connection.encrypted
-      ? "https"
-      : "http";
-
   const token = req.req.cookies.token;
   const secret = new TextEncoder().encode(
     "cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2"
@@ -81,7 +75,7 @@ export async function getServerSideProps(req) {
   const { payload } = await jose.jwtVerify(token, secret);
 
   const res = await fetch(
-    `${proto}://${host}/api/studentGET?id=${payload.aud}`,
+    `${process.env.DOMAIN}/api/studentGET?id=${payload.aud}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },

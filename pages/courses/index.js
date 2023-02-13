@@ -70,12 +70,7 @@ export default function Courses({ data }) {
 }
 
 export async function getServerSideProps(req) {
-  const host = req.req.headers.host;
-  const proto =
-    req.req.headers["x-forwarded-proto"] || req.req.connection.encrypted
-      ? "https"
-      : "http";
-  const res = await fetch(`${proto}://${host}/api/fetch`, {
+  const res = await fetch(`${process.env.DOMAIN}/api/fetch`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
