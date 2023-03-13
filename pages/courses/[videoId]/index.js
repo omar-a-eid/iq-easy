@@ -277,7 +277,6 @@ export default function Videos({ data, verified }) {
     </Layout>
   );
 }
-
 export async function getServerSideProps(req) {
   let verified = false;
   const secret = new TextEncoder().encode(
