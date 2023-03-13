@@ -13,8 +13,8 @@ export default function Courses({ data, verified }) {
   }
   return (
     <Layout page="/courses" width={100} title="All courses" verified>
-      <div>
-        <div>
+      <div style={{ height: "79%" }}>
+        <div style={{ height: "100%" }}>
           <div className={styles.courses_container}>
             <div className={styles.status}>
               <div>
@@ -66,6 +66,150 @@ export default function Courses({ data, verified }) {
                     </div>
                   </Link>
                 ))}
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>{" "}
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>{" "}
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>{" "}
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>{" "}
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>{" "}
+                <Link
+                  href={"/"}
+                  className={styles.category_wrapper}
+                  onClick={verified ? (e) => addProgress(e) : ""}
+                >
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      alt=" "
+                      width={60}
+                      height={60}
+                    />
+                  </div>
+                  <div>
+                    <p>شيبشسيب</p>
+                    <p>شيسبشسيبسيب</p>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
