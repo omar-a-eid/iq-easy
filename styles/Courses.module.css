@@ -47,7 +47,9 @@
   margin: 0.5em;
   border-radius: 1em;
 }
-
+.courses_container {
+  height: 100%;
+}
 .category_wrapper > div:first-child {
   height: fit-content;
   padding: 0.8em;
