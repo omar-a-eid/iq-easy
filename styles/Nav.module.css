@@ -63,7 +63,7 @@
   width: 90%;
   max-width: 15em;
   margin: 0 auto;
-  margin-top: 8em;
+  margin-top: 2em;
   padding: 1em 2em;
   border-radius: 20px;
   overflow: hidden;
@@ -156,7 +156,6 @@
 }
 
 @media (max-width: 900px) {
-  .support_container,
   .logo > p,
   .links {
     display: none;
