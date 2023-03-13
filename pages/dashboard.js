@@ -6,11 +6,19 @@ import Statistics from "../components/statistics";
 import Progress from "../components/progress";
 import * as jose from "jose";
 import { useState, useEffect } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 
-export default function Dashboard({ data, hours }) {
+export default function Dashboard({ data, hours, categories }) {
   const [comp, setComp] = useState(0);
   const [prog, setProg] = useState(0);
+  const [cate, setCate] = useState([]);
+
   const name = data.name.split(" ")[0];
+  const [sliderRef] = useKeenSlider({
+    loop: true,
+    slides: { perView: 1.05, spacing: 1 },
+  });
   useEffect(() => {
     let p = 0,
       c = 0;
@@ -24,41 +32,71 @@ export default function Dashboard({ data, hours }) {
     setComp(p);
     setProg(c);
   }, []);
-
+  const handleClick = (e) => {
+    fetch(`api/getCateCourse?category=${e.currentTarget.id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setCate(data.course);
+      });
+  };
   return (
     <Layout
       page="/"
       name={name}
       enc="You're doing great this week, Keep it up!"
+      verified={true}
     >
       <div>
         <div className={styles.info}>
           <Statistics completed={comp} progress={prog} hours={hours} />
           <Progress videos={data.videosInProg} />
         </div>
-        <div className={styles.adv}>
-          <div className={styles.adv_text}>
-            <p>
-              دبلومة التسويق الإلكتروني الشاملة الاحترافية Digital Marketing
-              Diploma
-            </p>
-            <p>
-              إعلانات فيسبوك وانستجرام - إعلانات جوجل ويوتيوب - إعلانات تويتر و
-              سناب شات وتيك توك - الكوبي رايتنج - إيميل ماركيتنج
-            </p>
-          </div>
-          <div>
-            <Image
-              className={styles.adv_image}
-              src="/home/student.png"
-              alt="A student studying"
-              width={200}
-              height={170}
-            />
-          </div>
+
+        <div ref={sliderRef} className={`keen-slider`}>
+          {categories.categories.map((cate, id) => (
+            <div key={id} className=" keen-slider__slide">
+              <div
+                className={styles.adv}
+                id={cate._id}
+                onClick={(e) => handleClick(e)}
+              >
+                <div className={styles.adv_container}>
+                  <div className={styles.adv_text}>
+                    <p>{cate.name}</p>
+                    <p>{cate.desc}</p>
+                  </div>
+
+                  <div>
+                    <Image
+                      className={styles.adv_image}
+                      src={cate.icon}
+                      alt="A student studying"
+                      width={200}
+                      height={170}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+
         {data.courses.length > 0 ? (
-          <Category title="Your courses" studentCourses={data.courses} />
+          <div className={styles.cate}>
+            <Category title="Your courses" studentCourses={data.courses} />
+          </div>
+        ) : (
+          ""
+        )}
+        {cate.length > 0 ? (
+          <div>
+            <Category title="Courses" courses={cate} />{" "}
+          </div>
         ) : (
           ""
         )}
@@ -81,11 +119,18 @@ export async function getServerSideProps(req) {
       headers: { "Content-Type": "application/json" },
     }
   );
+  const cate = await fetch(`${process.env.DOMAIN}/api/getCategory`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
   const data = await res.json();
+  const categories = await cate.json();
+
   return {
     props: {
       data: data,
       hours: data.hours,
+      categories: categories,
     },
   };
 }

@@ -2,8 +2,9 @@ import Image from "next/image";
 import styles from "../../styles/Courses.module.css";
 import Layout from "../../components/layout";
 import Link from "next/link";
+import * as jose from "jose";
 
-export default function Courses({ data }) {
+export default function Courses({ data, verified }) {
   function addProgress(e) {
     fetch(`/api/addProgress?id=${e.currentTarget.id}`, {
       method: "POST",
@@ -11,7 +12,7 @@ export default function Courses({ data }) {
     });
   }
   return (
-    <Layout page="/courses" width={100} title="All courses">
+    <Layout page="/courses" width={100} title="All courses" verified>
       <div>
         <div>
           <div className={styles.courses_container}>
@@ -21,8 +22,13 @@ export default function Courses({ data }) {
                   All courses
                 </Link>
               </div>
-              <div>
-                <Link href="/courses/current">Current</Link>
+
+              <div className={verified ? "" : styles.not_verified}>
+                {verified ? (
+                  <Link href="/courses/current">Current</Link>
+                ) : (
+                  <div>Current</div>
+                )}
               </div>
             </div>
             <div className={styles.category_height}>
@@ -33,7 +39,7 @@ export default function Courses({ data }) {
                     id={course._id}
                     href={`/courses/${course._id.toString()}`}
                     className={styles.category_wrapper}
-                    onClick={(e) => addProgress(e)}
+                    onClick={verified ? (e) => addProgress(e) : ""}
                   >
                     <div>
                       <Image
@@ -70,6 +76,17 @@ export default function Courses({ data }) {
 }
 
 export async function getServerSideProps(req) {
+  let verified = false;
+  const secret = new TextEncoder().encode(
+    "cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2"
+  );
+  const { token } = req.req.cookies;
+  if (token !== undefined) {
+    const { payload } = await jose.jwtVerify(token, secret);
+    if (payload) {
+      verified = true;
+    }
+  }
   const res = await fetch(`${process.env.DOMAIN}/api/fetch`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -78,6 +95,7 @@ export async function getServerSideProps(req) {
   return {
     props: {
       data,
+      verified,
     },
   };
 }

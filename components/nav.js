@@ -1,8 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Nav.module.css";
+import { CiSearch, CiLogin } from "react-icons/ci";
+import Logout from "./logout";
+import Search from "./search";
+import { useState } from "react";
 
-export default function Nav({ page }) {
+export default function Nav({ page, verified }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleIconClick = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div
       className={styles.nav_container}
@@ -60,6 +68,24 @@ export default function Nav({ page }) {
               Courses
             </p>
           </Link>
+          <div className={styles.search_container} onClick={handleIconClick}>
+            <CiSearch className={styles.search} />
+          </div>
+          {verified ? (
+            <div className={styles.logout}>
+              <Logout page={page} />
+            </div>
+          ) : (
+            <Link href="/login">
+              <CiLogin style={{ height: "24px", width: "24px" }} />
+              <p
+                className={styles.links}
+                style={page == "/courses" ? { display: "none" } : {}}
+              >
+                Login
+              </p>
+            </Link>
+          )}
         </div>
       </nav>
       {page == "/courses" ? (
@@ -102,6 +128,16 @@ export default function Nav({ page }) {
           height={50}
         />
       </Link>
+      <div
+        className={`${styles.search_bar} ${
+          isOpen ? styles.search_bar_active : " "
+        }`}
+      >
+        <div className={styles.x} onClick={handleIconClick}>
+          x
+        </div>
+        <Search />
+      </div>
     </div>
   );
 }

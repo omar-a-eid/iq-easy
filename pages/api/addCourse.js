@@ -45,6 +45,7 @@ apiRoute.use(
 
 apiRoute.post(async (req, res) => {
   await connectMongo();
+  const category = req.body.category;
   const name = req.body.name;
   const { icon, avatar, videos } = req.files;
   const videosID = [];
@@ -76,6 +77,7 @@ apiRoute.post(async (req, res) => {
     })
     .then(() => {
       const course = new Course({
+        category: category,
         name: name,
         icon: `/content/${req.body.name}/${icon[0].filename}`,
         avatar: `/content/${req.body.name}/${avatar[0].filename}`,

@@ -43,7 +43,7 @@ export default function Nav({ page }) {
             <span className={styles.circle}></span>
           </Link>
           <Link
-            href="/admin/courses"
+            href="/admin/category"
             className={page == "/admin/courses" ? styles.active : " "}
           >
             <Image

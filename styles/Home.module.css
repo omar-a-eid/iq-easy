@@ -1,22 +1,29 @@
 .info {
   display: flex;
   justify-content: space-between;
-  margin: 2em 0;
+  margin: 1em 0;
 }
 .info > div {
   width: 49%;
 }
 .adv {
+  cursor: pointer;
   position: relative;
   display: flex;
   justify-content: space-around;
+  align-items: baseline;
   width: 95%;
-  height: 160px;
+  height: fit-content;
   padding: 0 2em;
   border-radius: 1.5em;
   text-align: center;
   font-family: "arabic";
   background-color: #c8e6f1;
+}
+.adv_text {
+  height: 100%;
+  align-self: center;
+  flex-basis: 80%;
 }
 .adv::after {
   position: absolute;
@@ -29,9 +36,9 @@
   border-radius: 75px 0px 0px 40px;
 }
 .adv_text p:first-child {
-  font-size: 1.5vw;
+  font-size: 1.4vw;
   margin-top: 1.2em;
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 .adv_text p:last-child {
   font-size: 1vw;
@@ -39,9 +46,14 @@
 }
 .adv_image {
   position: relative;
-  top: -10px;
+  top: 4px;
 }
-
+.adv_container {
+  display: flex;
+}
+.cate {
+  display: none;
+}
 @media (max-width: 1330px) {
   .info {
     flex-direction: column;
@@ -72,6 +84,9 @@
 }
 
 @media (max-width: 570px) {
+  .cate {
+    display: block;
+  }
   .adv {
     display: none;
   }

@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   background: transparent
     linear-gradient(
       170deg,
@@ -19,6 +19,7 @@
 }
 
 .main {
+  height: 96%;
   width: 79%;
   margin: 10px 0;
   margin-right: 10px;
@@ -28,7 +29,7 @@
   border-radius: 50px;
   background-color: white;
   color: black;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .main > div:first-child {
@@ -42,8 +43,8 @@
   }
 }
 @media (max-width: 1000px) {
-  .main > div:first-child {
-    flex-direction: column-reverse;
+  .main {
+    padding-left: 2em;
   }
 }
 @media (max-width: 900px) {

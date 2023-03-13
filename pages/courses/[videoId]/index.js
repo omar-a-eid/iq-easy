@@ -2,10 +2,11 @@ import Image from "next/image";
 import Layout from "../../../components/layout";
 import styles from "../../../styles/Content.module.css";
 import Link from "next/link";
+import * as jose from "jose";
 import { useState } from "react";
 
-export default function Videos(props) {
-  const { all, currentCourse, student } = props.data;
+export default function Videos({ data, verified }) {
+  const { all, currentCourse, student } = data;
   const [src, setSrc] = useState(currentCourse.videos[0].videoUrl);
   const [vdId, setVdId] = useState(currentCourse.videos[0]._id);
   const [active, setActive] = useState(false);
@@ -63,7 +64,7 @@ export default function Videos(props) {
     setActive(true);
   }
   return (
-    <Layout page="/courses" width={100} title="Courses">
+    <Layout page="/courses" width={100} title="Courses" verified>
       <div className={styles.container}>
         <div>
           <div className={styles.status_container}>
@@ -118,42 +119,45 @@ export default function Videos(props) {
             id="current"
             style={{ display: "none" }}
           >
-            {student.courses.map((course, id) => (
-              <Link
-                key={id}
-                href={`/courses/${course.course._id}`}
-                className={styles.course}
-              >
-                <div>
-                  <Image
-                    className={styles.adv_image}
-                    src={course.course.icon}
-                    alt=" "
-                    width={60}
-                    height={60}
-                  />
-                </div>
-                <div>
-                  <p>{course.course.name}</p>
-                  <p>
-                    {new Date(course.course.createdAt).toLocaleDateString(
-                      "en-us",
-                      {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      }
-                    )}
-                  </p>
-                </div>
-              </Link>
-            ))}
+            {verified
+              ? student.courses.map((course, id) => (
+                  <Link
+                    key={id}
+                    href={`/courses/${course.course._id}`}
+                    className={styles.course}
+                  >
+                    <div>
+                      <Image
+                        className={styles.adv_image}
+                        src={course.course.icon}
+                        alt=" "
+                        width={60}
+                        height={60}
+                      />
+                    </div>
+                    <div>
+                      <p>{course.course.name}</p>
+                      <p>
+                        {new Date(course.course.createdAt).toLocaleDateString(
+                          "en-us",
+                          {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          }
+                        )}
+                      </p>
+                    </div>
+                  </Link>
+                ))
+              : ""}
           </div>
         </div>
         <div>
           <div>
             <video
+              controlsList="nodownload"
               id="time"
               onPlay={(e) => time(e)}
               onPause={(e) => {
@@ -164,7 +168,7 @@ export default function Videos(props) {
               className={styles.video}
               data-vdid={vdId}
               src={src}
-              type="video/mp4"
+              type="video/*"
             ></video>
           </div>
           <h2 className={styles.title}>{currentCourse.name}</h2>
@@ -184,47 +188,88 @@ export default function Videos(props) {
               </div>
             </div>
             <div className={styles.videos_container}>
-              {currentCourse.videos.map((video, id) => (
-                <div
-                  key={id}
-                  className={styles.video_container}
-                  id={video._id.toString()}
-                  onClick={(e) => play(e)}
-                >
-                  <div className={styles.imgText}>
-                    <div className={styles.image}>
+              {currentCourse.videos.map((video, id) =>
+                !verified && id !== 0 ? (
+                  <div
+                    key={id}
+                    className={`${styles.video_container} ${styles.video_not_active}`}
+                    id={video._id.toString()}
+                  >
+                    <div className={styles.imgText}>
+                      <div className={styles.image}>
+                        <Image
+                          src="/content/play.png"
+                          alt=" "
+                          width={20}
+                          height={20}
+                        />
+                      </div>
+                      <div>
+                        <div>
+                          <div className={styles.time}>
+                            <Image
+                              src="/content/time.png"
+                              alt=" "
+                              width={20}
+                              height={20}
+                            />
+                            {video.time} mins
+                          </div>
+                        </div>
+                        <div className={styles.name}>{video.name}</div>
+                      </div>
+                    </div>
+                    <div className={styles.play2}>
                       <Image
-                        src="/content/play.png"
+                        src="/content/play2.png"
                         alt=" "
-                        width={20}
-                        height={20}
+                        width={30}
+                        height={30}
                       />
                     </div>
-                    <div>
-                      <div>
-                        <div className={styles.time}>
-                          <Image
-                            src="/content/time.png"
-                            alt=" "
-                            width={20}
-                            height={20}
-                          />
-                          {video.time} mins
-                        </div>
+                  </div>
+                ) : (
+                  <div
+                    key={id}
+                    className={styles.video_container}
+                    id={video._id.toString()}
+                    onClick={(e) => play(e)}
+                  >
+                    <div className={styles.imgText}>
+                      <div className={styles.image}>
+                        <Image
+                          src="/content/play.png"
+                          alt=" "
+                          width={20}
+                          height={20}
+                        />
                       </div>
-                      <div className={styles.name}>{video.name}</div>
+                      <div>
+                        <div>
+                          <div className={styles.time}>
+                            <Image
+                              src="/content/time.png"
+                              alt=" "
+                              width={20}
+                              height={20}
+                            />
+                            {video.time} mins
+                          </div>
+                        </div>
+                        <div className={styles.name}>{video.name}</div>
+                      </div>
+                    </div>
+                    <div className={styles.play2}>
+                      <Image
+                        src="/content/play2.png"
+                        alt=" "
+                        width={30}
+                        height={30}
+                      />
                     </div>
                   </div>
-                  <div className={styles.play2}>
-                    <Image
-                      src="/content/play2.png"
-                      alt=" "
-                      width={30}
-                      height={30}
-                    />
-                  </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
         </div>
@@ -234,26 +279,38 @@ export default function Videos(props) {
 }
 
 export async function getServerSideProps(req) {
-  const host = req.req.headers.host;
-  const proto =
-    req.req.headers["x-forwarded-proto"] || req.req.connection.encrypted
-      ? "https"
-      : "http";
+  let verified = false;
+  const secret = new TextEncoder().encode(
+    "cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2"
+  );
+  const { token } = req.req.cookies;
   const { videoId } = req.params;
-  const res = await fetch(
-    `${proto}://${host}/api/getCourse?course=${videoId}`,
-    {
+  let res;
+  if (token !== undefined) {
+    const { payload } = await jose.jwtVerify(token, secret);
+    if (payload) {
+      verified = true;
+    }
+    res = await fetch(`${process.env.DOMAIN}/api/getCourse?course=${videoId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${req.req.cookies.token}`,
+        Authorization: `${token}`,
       },
-    }
-  );
+    });
+  } else {
+    res = await fetch(`${process.env.DOMAIN}/api/getCourse?course=${videoId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   const data = await res.json();
   return {
     props: {
       data: data,
+      verified,
     },
   };
 }

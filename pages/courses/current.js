@@ -6,7 +6,7 @@ import * as jose from "jose";
 
 export default function Courses({ data }) {
   return (
-    <Layout page="/courses" width={100} title="Current courses">
+    <Layout page="/courses" width={100} title="Current courses" verified={true}>
       <div className={styles.main}>
         <div>
           <div className={styles.courses_container}>

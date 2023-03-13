@@ -9,10 +9,11 @@ export default function Layout({
   title,
   enc,
   name = "Stranger",
+  verified,
 }) {
   return (
     <div className={styles.container}>
-      <Nav page={page} />
+      <Nav page={page} verified={verified} />
       <div className={styles.main} style={{ width: `${width}%` }}>
         <Header title={title} name={name} enc={enc} />
         {children}

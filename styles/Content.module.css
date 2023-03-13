@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 75vh;
+  height: 100%;
   overflow-y: scroll;
 }
 .course {
@@ -68,9 +68,11 @@
 }
 .container > div:first-child {
   width: 30%;
+  height: 100%;
 }
 .container > div:last-child {
   width: 65%;
+  height: 100%;
 }
 
 .video {
@@ -82,7 +84,7 @@
   font-family: "arabic";
 }
 .videos_container {
-  height: 33vh;
+  height: 100%;
   overflow-y: scroll;
 }
 .videos_container > div {
@@ -146,4 +148,8 @@
   .play2 {
     display: none;
   }
+}
+.video_not_active {
+  cursor: not-allowed;
+  opacity: 0.7;
 }

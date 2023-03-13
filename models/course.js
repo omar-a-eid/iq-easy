@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 const Content = require("./content");
+const Category = require("./category");
+
 const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
   {
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: Category,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

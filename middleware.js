@@ -37,8 +37,9 @@ export default async function middleware(req) {
   }
 
   if (
-    req.nextUrl.pathname.includes("/dashboard") ||
-    req.nextUrl.pathname.includes("/courses")
+    req.nextUrl.pathname.includes("/dashboard")
+    //  ||
+    // req.nextUrl.pathname.includes("/courses")
   ) {
     try {
       const { cookies } = req;
@@ -47,20 +48,20 @@ export default async function middleware(req) {
 
       NextResponse.next();
     } catch (err) {
-      url.pathname = "/login";
+      url.pathname = "/";
       return NextResponse.redirect(url);
     }
   }
 
-  if (req.nextUrl.pathname.includes("/courses")) {
-    const { cookies } = req;
-    const jwt = cookies.get("token").value;
-    const { payload } = await jose.jwtVerify(jwt, secret);
-    if (new Date(payload.sub).getTime() === new Date().getTime()) {
-      url.pathname = "/dashboard";
-      return NextResponse.next(url);
-    }
-    return NextResponse.next();
-  }
+  // if (req.nextUrl.pathname.includes("/courses")) {
+  //   const { cookies } = req;
+  //   const jwt = cookies.get("token").value;
+  //   const { payload } = await jose.jwtVerify(jwt, secret);
+  //   if (new Date(payload.sub).getTime() === new Date().getTime()) {
+  //     url.pathname = "/dashboard";
+  //     return NextResponse.next(url);
+  //   }
+  //   return NextResponse.next();
+  // }
   return NextResponse.next();
 }

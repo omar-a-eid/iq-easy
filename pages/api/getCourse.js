@@ -12,18 +12,23 @@ export default async function courses(req, res) {
       "cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2"
     );
     const jwt = req.headers.authorization;
-    const { payload } = await jose.jwtVerify(jwt, secret);
-    const student = await Student.findById(payload.aud).populate(
-      "courses.course"
-    );
+    if (jwt) {
+      const { payload } = await jose.jwtVerify(jwt, secret);
+      const student = await Student.findById(payload.aud).populate(
+        "courses.course"
+      );
+      if (!student) throw new Error("Can't find data");
+      if (!allCourses) throw new Error("Can't find data");
+      if (!course) throw new Error("Can't find data");
 
-    if (!allCourses) throw new Error("Can't find data");
-    if (!course) throw new Error("Can't find data");
-    if (!student) throw new Error("Can't find data");
-
-    return res
-      .status(200)
-      .json({ all: allCourses, currentCourse: course, student: student });
+      return res
+        .status(200)
+        .json({ all: allCourses, currentCourse: course, student: student });
+    } else {
+      if (!allCourses) throw new Error("Can't find data");
+      if (!course) throw new Error("Can't find data");
+      return res.status(200).json({ all: allCourses, currentCourse: course });
+    }
   } catch (err) {
     return res.status(500).json(err.message);
   }
