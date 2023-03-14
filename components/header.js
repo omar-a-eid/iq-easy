@@ -9,7 +9,7 @@ export default function Header({
 }) {
   const router = useRouter();
   return (
-    <div>
+    <div className={styles.container}>
       {title ? (
         <div>
           <h1 className={styles.welcome}>{title}</h1>
